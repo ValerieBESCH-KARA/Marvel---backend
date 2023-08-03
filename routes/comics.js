@@ -4,6 +4,8 @@ const axios = require("axios");
 
 router.use(express.json());
 
+const apiKey = process.env.API_KEY;
+
 router.get("/comics", async (req, res) => {
   try {
     const title = req.query.title || "";

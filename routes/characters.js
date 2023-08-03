@@ -4,6 +4,8 @@ const axios = require("axios");
 
 router.use(express.json());
 
+const apiKey = process.env.API_KEY;
+
 router.get("/characters", async (req, res) => {
   const name = req.query.name || "";
   const skip = req.query.skyp || "0";
