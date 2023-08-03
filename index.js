@@ -27,6 +27,7 @@ app.get("/comics", async (req, res) => {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/comics?apiKey=${apiKey}&title=${title}&skip=${skip}&limit=${limit}`
     );
+    // console.log("comics data>>>", response.data);
     return res.status(200).json(response.data);
   } catch (error) {
     return res.status(400).send({ message: error.message });
@@ -40,18 +41,19 @@ app.get("/comics/:characterId", async (req, res) => {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/comics/${characterId}?apiKey=${apiKey}`
     );
-    console.log("comics/:characterId>>>", data);
+
     return res.status(200).json(response.data);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 });
 
 app.get("/comic/:comicId", async (req, res) => {
   try {
-    const { comicId } = req.params;
+    const comicId = req.params.comicId;
+
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/comic/${comicId}?apiKey=UDIKxB9RFuXmR5XB`
+      `https://lereacteur-marvel-api.herokuapp.com/comic/${comicId}?apiKey=${apiKey}`
     );
     return res.status(200).json(response.data);
   } catch (error) {
@@ -60,29 +62,30 @@ app.get("/comic/:comicId", async (req, res) => {
 });
 
 app.get("/characters", async (req, res) => {
-  try {
-    const name = req.query.name || "";
-    const skip = req.query.skyp || "0";
-    const limit = req.query.limit || "100";
+  const name = req.query.name || "";
+  const skip = req.query.skyp || "0";
+  const limit = req.query.limit || "100";
 
+  try {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${apiKey}&name=${name}&skip=${skip}&limit=${limit}`
     );
+    // console.log("characters data>>>", response.data);
     return res.status(200).json(response.data);
   } catch (error) {
-    return res.status(400).json({ "message-character": error.message });
+    return res.status(500).json({ "message-character": error.message });
   }
 });
 
 app.get("/character/:characterId", async (req, res) => {
   try {
-    const { characterId } = req.params;
+    const characterId = req.params.id;
     const response = await axios.get(
-      `https://lereacteur-marvel-api.herokuapp.com/character/${characterId}?apiKey=UDIKxB9RFuXmR5XB`
+      `https://lereacteur-marvel-api.herokuapp.com/character/${characterId}?apiKey=${apiKey}`
     );
     return res.status(200).json(response.data);
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 });
 
