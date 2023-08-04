@@ -12,14 +12,12 @@ router.post("/signup", fileUpload(), async (req, res) => {
   try {
     const { username, email, password, favourites, comics } = req.body;
 
-    // IF THE FIELDS ARE NOT FILLED IN *************************\\
     if (!username || !email || !password) {
       return res.status(400).json({ message: "Missing parameter" });
     }
 
     const emailAlreadyExists = await User.findOne({ email });
 
-    // IF THE E-MAIL ENTERED ALREADY EXISTS******************\\
     if (emailAlreadyExists) {
       return res.status(409).json({ message: "This e-mail already exists" });
     }
@@ -99,6 +97,7 @@ router.post("/login", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 // CHARACTER FAVOURITES
 router.put("/user/update/:id", async (req, res) => {
   try {
@@ -115,7 +114,7 @@ router.put("/user/update/:id", async (req, res) => {
   }
 });
 
-router.put("/user/deletefav/:id", async (req, res) => {
+router.put("/user/deletefavoris/:id", async (req, res) => {
   try {
     const userToUpdate = await User.findById(req.params.id);
     const favToDelete = userToUpdate.favourites.find(
