@@ -6,7 +6,7 @@ const encBase64 = require("crypto-js/enc-base64");
 
 const fileUpload = require("express-fileupload");
 
-const User = require("../models/User");
+const User = require("../models/Users");
 
 router.post("/signup", fileUpload(), async (req, res) => {
   try {
@@ -52,6 +52,7 @@ router.post("/signup", fileUpload(), async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 router.get("/user", async (req, res) => {
   try {
     const user = await User.find();
@@ -61,6 +62,7 @@ router.get("/user", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 router.get("/user/:id", async (req, res) => {
   try {
     const userId = req.params.id;
